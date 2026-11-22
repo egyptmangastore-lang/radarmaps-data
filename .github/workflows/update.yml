@@ -19,7 +19,7 @@ jobs:
       - name: Install pyosmium
         run: pip install osmium
       - name: Download Egypt extract (Geofabrik)
-        run: curl -sSfL -o egypt.osm.pbf https://download.geofabrik.de/africa/egypt-latest.osm.pbf
+        run: curl -sSfL --retry 8 --retry-all-errors --retry-delay 60 -A "radarmaps-data-weekly" -o egypt.osm.pbf https://download.geofabrik.de/africa/egypt-latest.osm.pbf
       - name: Extract speed cameras and bumps
         run: python -I tools/extract_hazards.py egypt.osm.pbf hazards_eg.json
       - name: Commit if changed
